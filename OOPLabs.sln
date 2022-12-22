@@ -12,6 +12,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SecondLab1", "SecondLab1\Se
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ThirdLab", "ThirdLab\ThirdLab.vcxproj", "{3DA589F5-61DA-494C-8FEF-73B908E56633}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DomainForOOP", "DomainForOOP\DomainForOOP.vcxproj", "{3748255C-439E-4165-A833-14FA7D881F6F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -60,6 +62,14 @@ Global
 		{3DA589F5-61DA-494C-8FEF-73B908E56633}.Release|Win32.Build.0 = Release|Win32
 		{3DA589F5-61DA-494C-8FEF-73B908E56633}.Release|x64.ActiveCfg = Release|x64
 		{3DA589F5-61DA-494C-8FEF-73B908E56633}.Release|x64.Build.0 = Release|x64
+		{3748255C-439E-4165-A833-14FA7D881F6F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3748255C-439E-4165-A833-14FA7D881F6F}.Debug|Win32.Build.0 = Debug|Win32
+		{3748255C-439E-4165-A833-14FA7D881F6F}.Debug|x64.ActiveCfg = Debug|x64
+		{3748255C-439E-4165-A833-14FA7D881F6F}.Debug|x64.Build.0 = Debug|x64
+		{3748255C-439E-4165-A833-14FA7D881F6F}.Release|Win32.ActiveCfg = Release|Win32
+		{3748255C-439E-4165-A833-14FA7D881F6F}.Release|Win32.Build.0 = Release|Win32
+		{3748255C-439E-4165-A833-14FA7D881F6F}.Release|x64.ActiveCfg = Release|x64
+		{3748255C-439E-4165-A833-14FA7D881F6F}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{31C98619-E81F-4F17-BBD7-4A6DEEEE4D76} = {58684227-FC3D-4AEB-AE6E-BAC1A66DE87D}
