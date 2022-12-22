@@ -1,3 +1,8 @@
+// Description of domain: Here descripted some classes of Deposit and Client, that i can use in some bank system
+// I can expend logic of deposit and client using inheritance in the future (for example, VIPDeposite+VIPClient)
+// Using friendship i can expend operations with my classes
+// Using MoveSemantic i can use rvalues in constructor
+
 // inheritance - deposite+VIPDeposite, DefaultClient+Client
 // friendship - BankOperation+Deposite+Client
 // MoveSemantic - Client
@@ -131,6 +136,8 @@ int main(int argc, char* argv[])
     DepositeOperation::PutOnDeposite(user, 100);
     DepositeOperation::WithdrawFromDeposite(user, 5);
     user._deposite->Display();
+
+    // example with rvalue
     Client user2(CreateClient());
     user2._deposite->Display();
     return 0;
