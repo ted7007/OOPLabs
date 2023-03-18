@@ -17,12 +17,19 @@ struct User
 struct Iterator
 {
     using iterator_category = std::forward_iterator_tag;
-    //using difference_type = std::ptrdiff_t;
+    //using difference_type = std::ptrdiff_t; хз зачем эт
     using value_type = int;
     using pointer = int*;
     using reference = int&;
 
     Iterator(pointer ptr) : m_ptr(ptr) {}
+    
+    Iterator(Iterator& iterator) : Iterator{ iterator.m_ptr } { }
+
+    Iterator(Iterator&& iterator) : Iterator {iterator.m_ptr}
+    {
+        iterator.m_ptr = nullptr;
+    }
 
     reference operator*() const { return *m_ptr; }
     pointer operator->() { return m_ptr; }
@@ -53,12 +60,17 @@ class Numbers
 
 int main()
 {
-    std::cout << "Hello World!\n";
+  /*  std::cout << "Hello World!\n";
     Numbers integers;
-
+    
     cout << "tens element is " << *(integers.begin()+9) << " " << endl;
     for (auto i : integers)
-        std::cout << i << "\n";
+        std::cout << i << "\n";*/
+
+    int a = 1;
+    int b = 4;
+    Iterator first = Iterator(&a);
+    Iterator second = Iterator(&a);
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
