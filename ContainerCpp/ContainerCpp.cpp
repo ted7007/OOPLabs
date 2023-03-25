@@ -14,22 +14,40 @@ struct User
         string Password;
 };
 
+//legacy iterator
 struct Iterator
 {
+
+public:
     using iterator_category = std::forward_iterator_tag;
-    //using difference_type = std::ptrdiff_t; хз зачем эт
+    using difference_type = std::ptrdiff_t; 
     using value_type = int;
     using pointer = int*;
     using reference = int&;
-
+    
     Iterator(pointer ptr) : m_ptr(ptr) {}
     
-    Iterator(Iterator& iterator) : Iterator{ iterator.m_ptr } { }
+    // Destructible
+    ~Iterator()
+    {
+        m_ptr = nullptr;
+    }
 
+    // copy constructable
+    Iterator(const Iterator& iterator) { m_ptr = iterator.m_ptr; }
+
+    // move constructible
     Iterator(Iterator&& iterator) : Iterator {iterator.m_ptr}
     {
         iterator.m_ptr = nullptr;
     }
+
+    // move assignable
+    Iterator& operator=(Iterator&& iterator) { m_ptr = iterator.m_ptr; return *this; }
+
+    // copy assignable
+    Iterator& operator=(Iterator& iterator) { m_ptr = iterator.m_ptr; return *this; }
+
 
     reference operator*() const { return *m_ptr; }
     pointer operator->() { return m_ptr; }
@@ -42,8 +60,23 @@ struct Iterator
     friend bool operator!= (const Iterator& a, const Iterator& b) { return a.m_ptr != b.m_ptr; };*/
     bool operator== (const Iterator& b) { return m_ptr == b.m_ptr; };
     bool operator!= (const Iterator& b) { return m_ptr != b.m_ptr; };
-    private:
-     pointer m_ptr;
+
+    //swapable
+    void swap(Iterator& other) 
+    {
+        pointer tmp = m_ptr;
+        m_ptr = other.m_ptr;
+        other.m_ptr = tmp;
+    }
+
+    static void swap(Iterator& i1, Iterator& i2)
+    {
+        i1.swap(i2);
+    }
+
+private:
+    pointer m_ptr;
+    
 };
 
 class Numbers
@@ -67,10 +100,12 @@ int main()
     for (auto i : integers)
         std::cout << i << "\n";*/
 
-    int a = 1;
-    int b = 4;
-    Iterator first = Iterator(&a);
-    Iterator second = Iterator(&a);
+    Numbers n;
+    
+    for (int i : n)
+    {
+        cout << i << endl;
+    }
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
