@@ -5,6 +5,7 @@
 #include <iterator>
 #include <cstddef>
 #include <string>
+#include <vector>
 using namespace std;
 
 struct User
@@ -37,13 +38,13 @@ public:
     Iterator(const Iterator& iterator) { m_ptr = iterator.m_ptr; }
 
     // move constructible
-    Iterator(Iterator&& iterator) : Iterator {iterator.m_ptr}
+    Iterator(Iterator&& iterator) : Iterator {iterator}
     {
         iterator.m_ptr = nullptr;
     }
 
     // move assignable
-    Iterator& operator=(Iterator&& iterator) { m_ptr = iterator.m_ptr; return *this; }
+    Iterator& operator=(Iterator&& iterator) { m_ptr = iterator.m_ptr; iterator = nullptr; return *this; }
 
     // copy assignable
     Iterator& operator=(Iterator& iterator) { m_ptr = iterator.m_ptr; return *this; }
@@ -79,14 +80,83 @@ private:
     
 };
 
+//
 class Numbers
 {
-    public:
-        Iterator begin() { return Iterator(&dataArray[0]); }
-        Iterator end() { return Iterator(&dataArray[10]); }
+public:
+    using difference_type = std::ptrdiff_t;
+    using value_type = int;
+    using pointer = vector<int>*;
+    using reference = int&;
+    using size_type = unsigned int;
 
+    Numbers()
+    {
+
+    }
+
+    virtual ~Numbers() { dataArray.clear(); }
+
+    Numbers(Numbers& c) : dataArray(c.dataArray)
+    {
+
+    }
+
+    Numbers(Numbers&& c) : Numbers(c)
+    {
+    }
+
+    // move assignable
+    Numbers& operator=(Numbers&& container) { dataArray = container.dataArray;  return *this; }
+
+    // copy assignable
+    Numbers& operator=(Numbers& container) { dataArray = container.dataArray; return *this; }
+
+
+    Iterator begin() noexcept { return Iterator(dataArray.data()); }
+
+    Iterator end() noexcept { return Iterator(dataArray.data() + dataArray.size()); }
+
+    bool operator== (const Numbers& b)
+    {
+        return std::equal(dataArray.begin(), dataArray.end(), b.dataArray.begin(), b.dataArray.end());
+    };
+    bool operator!= (const Numbers& b) 
+    { 
+        return !(*this == b);
+    };
+
+
+    void swap(Numbers& other)
+    {
+        vector<int> *tmp = &dataArray;
+        dataArray = other.dataArray;
+        other.dataArray = *tmp;
+        tmp = nullptr;
+    }
+
+    static void swap(Numbers& i1, Numbers& i2)
+    {
+        i1.swap(i2);
+    }
+
+    size_type size()
+    {
+        return std::distance(begin(), end());
+    }
+
+    size_type maxSize()
+    {
+        return dataArray.max_size();
+    }
+
+    size_type empty()
+    {
+        return begin() == end();
+    }
+    
     private:
-        int dataArray[10] = {1,2,3,4,5,6,7,8,9,10};
+       vector<int> dataArray;
 
 };
 
@@ -102,10 +172,7 @@ int main()
 
     Numbers n;
     
-    for (int i : n)
-    {
-        cout << i << endl;
-    }
+    n.~Numbers();
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
